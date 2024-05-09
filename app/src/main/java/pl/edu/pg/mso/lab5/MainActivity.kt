@@ -20,19 +20,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var array: IntArray = IntArray(Companion.ARRAY_SIZE) {0}
+        var array: IntArray = IntArray(ARRAY_SIZE) {0}
 
         findViewById<Button>(R.id.generate).setOnClickListener {
-            array = IntArray(Companion.ARRAY_SIZE) { (0..10000).random() }
+            array = IntArray(ARRAY_SIZE) { (0..10000).random() }
             printArray(array)
         }
 
         findViewById<Button>(R.id.sort).setOnClickListener {
             val ktArray = array.copyOf()
+            val cppArray = array.copyOf()
             var sortTimes = ""
 
-            sortTimes += "kt:  ${measureNanoTime { ktArray.sort()}} nano sec\n"
-            sortTimes += "cpp: ${measureNanoTime { cppSort(array) }} nano sec"
+            sortTimes += "kt:  ${measureNanoTime { ktArray.sort()}} ns\n"
+            val cppMeasureJNI = measureNanoTime { cppSort(array) }
+            sortTimes += "cpp: $cppMeasureJNI ns\n"
+            val cppMeasureNoJNI = cppMeasure(cppArray)
+            sortTimes += "cpp[no JNI]: $cppMeasureNoJNI ns\n"
+            sortTimes += "~JNI: ${cppMeasureJNI - cppMeasureNoJNI} ns"
 
             findViewById<TextView>(R.id.times).text = sortTimes
 
@@ -53,6 +58,7 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
     private external fun cppSort(array: IntArray): Void
+    private external fun cppMeasure(array: IntArray): Long
 
     companion object {
         // Used to load the 'lab5' library on application startup.

@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/array"
-        android:layout_width="370dp"
-        android:layout_height="583dp"
+        android:layout_width="361dp"
+        android:layout_height="359dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,8 +43,8 @@
 
     <TextView
         android:id="@+id/times"
-        android:layout_width="367dp"
-        android:layout_height="50dp"
+        android:layout_width="363dp"
+        android:layout_height="158dp"
         android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
